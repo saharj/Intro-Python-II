@@ -37,10 +37,12 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
-
+print("")
+print("WHERE IS THE TREASURE?")
+print("")
 # Make a new player object that is currently in the 'outside' room.
 
-newPlayer = Player("outside")
+player = Player("outside")
 
 # Write a loop that:
 #
@@ -59,17 +61,38 @@ choice = ""
 while choice != "q":
 
     if choice == "s":
-        current = room[current].s_to.nick_name
+        if hasattr(room[current], "s_to"):
+            current = room[current].s_to.nick_name
+            player.setLocation(current)
+        else:
+            print("There is no door to the {current} side.")
+            print("Try another direction.  Select q to exit.")
+
     elif choice == "n":
-        current = room[current].n_to.nick_name
+        if hasattr(room[current], "n_to"):
+            current = room[current].n_to.nick_name
+            player.setLocation(current)
+        else:
+            print("There is no door to the {current} side.")
+            print("Try another direction.  Select q to exit.")
     elif choice == "e":
-        current = room[current].e_to.nick_name
+        if hasattr(room[current], "e_to"):
+            current = room[current].e_to.nick_name
+            player.setLocation(current)
+        else:
+            print("There is no door to the {current} side.")
+            print("Try another direction.  Select q to exit.")
     elif choice == "w":
-        current = room[current].w_to.nick_name
+        if hasattr(room[current], "w_to"):
+            current = room[current].w_to.nick_name
+            player.setLocation(current)
+        else:
+            print("There is no door to the {current} side.")
+            print("Try another direction.  Select q to exit.")
 
     print("------------------------------------")
-    print("* " + room[current].name + ": " +
+    print("* You are in " + room[current].name + ": " +
           room[current].description + "\n")
-    choice = input("Which direction should we go now? (N, E, S, W) => ")
+    choice = input("Which direction would you go now? (n, e, s, w) => ")
     print("")
     print("")

@@ -4,3 +4,6 @@
 class Player:
     def __init__(self, location):
         self.location = location
+
+    def setLocation(self, new_location):
+        self.location = new_location
