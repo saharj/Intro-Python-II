@@ -108,6 +108,10 @@ while choice != "q":
             else:
                 print(f"There is no door to the {choice} side.")
                 print("Try another direction.  Select q to exit.")
+        elif choice == "i" or choice == "inventory":
+            print("Item(s) you are carrying:")
+            for i in player.tools:
+                print(f"- {i.name}")
         else:
             print(f"There is no door to the {choice} side.")
             print("Try another direction.  Select q to exit.")
