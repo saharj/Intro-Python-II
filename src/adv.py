@@ -85,36 +85,42 @@ while choice != "q":
                 current = room[current].s_to.nick_name
                 player.setLocation(current)
             else:
-                print("There is no door to the {current} side.")
+                print(f"There is no door to the {choice} side.")
                 print("Try another direction.  Select q to exit.")
         elif choice == "n":
             if hasattr(room[current], "n_to"):
                 current = room[current].n_to.nick_name
                 player.setLocation(current)
             else:
-                print("There is no door to the {current} side.")
+                print(f"There is no door to the {choice} side.")
                 print("Try another direction.  Select q to exit.")
         elif choice == "e":
             if hasattr(room[current], "e_to"):
                 current = room[current].e_to.nick_name
                 player.setLocation(current)
             else:
-                print("There is no door to the {current} side.")
+                print(f"There is no door to the {choice} side.")
                 print("Try another direction.  Select q to exit.")
         elif choice == "w":
             if hasattr(room[current], "w_to"):
                 current = room[current].w_to.nick_name
                 player.setLocation(current)
             else:
-                print("There is no door to the {current} side.")
+                print(f"There is no door to the {choice} side.")
                 print("Try another direction.  Select q to exit.")
+        else:
+            print(f"There is no door to the {choice} side.")
+            print("Try another direction.  Select q to exit.")
     else:
         if command[0] == 'get' or command[0] == 'take':
             # print(command)
-            get_item = room[player.current_room].find_item(command[1])
-            if get_item != False:
-                player.add_tool(get_item)
+            item = room[player.current_room].find_item(command[1])
+            if item != False:
+                player.add_tool(item)
+                item.on_take(item.name)
+                room[player.current_room].remove_item(item)
                 # print(player.tools[0].name)
+                # print(room.items[0].name)
             else:
                 print("{command[1]} doesn't exist in this room.")
 
