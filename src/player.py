@@ -2,8 +2,12 @@
 # currently.
 
 class Player:
-    def __init__(self, location):
-        self.location = location
+    def __init__(self, current_room):
+        self.current_room = current_room
+        self.tools = []
 
-    def setLocation(self, new_location):
-        self.location = new_location
+    def setLocation(self, new_room):
+        self.current_room = new_room
+
+    def add_tool(self, item):
+        self.tools.append(item)

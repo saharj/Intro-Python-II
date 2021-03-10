@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -34,6 +35,21 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+bucket = Item("bucket", "this is a bucket")
+broom = Item("broom", "this is a broom")
+rope = Item("rope", "this is a rope")
+key = Item("key", "This key can open any door")
+treasure = Item("treasure", "What can it be?")
+# print(bucket.name)
+
+room['outside'].add_item(bucket)
+room['foyer'].add_item(broom)
+room['foyer'].add_item(rope)
+room['narrow'].add_item(key)
+room['treasure'].add_item(treasure)
+
+# print(room['outside'].items[0].name)
+
 #
 # Main
 #
@@ -55,44 +71,56 @@ player = Player("outside")
 #
 # If the user enters "q", quit the game.
 
+# TODO: Remove the line below
 current = "outside"
 choice = ""
 
 while choice != "q":
 
-    if choice == "s":
-        if hasattr(room[current], "s_to"):
-            current = room[current].s_to.nick_name
-            player.setLocation(current)
-        else:
-            print("There is no door to the {current} side.")
-            print("Try another direction.  Select q to exit.")
+    command = choice.split()
 
-    elif choice == "n":
-        if hasattr(room[current], "n_to"):
-            current = room[current].n_to.nick_name
-            player.setLocation(current)
-        else:
-            print("There is no door to the {current} side.")
-            print("Try another direction.  Select q to exit.")
-    elif choice == "e":
-        if hasattr(room[current], "e_to"):
-            current = room[current].e_to.nick_name
-            player.setLocation(current)
-        else:
-            print("There is no door to the {current} side.")
-            print("Try another direction.  Select q to exit.")
-    elif choice == "w":
-        if hasattr(room[current], "w_to"):
-            current = room[current].w_to.nick_name
-            player.setLocation(current)
-        else:
-            print("There is no door to the {current} side.")
-            print("Try another direction.  Select q to exit.")
+    if len(command) <= 1:
+        if choice == "s":
+            if hasattr(room[current], "s_to"):
+                current = room[current].s_to.nick_name
+                player.setLocation(current)
+            else:
+                print("There is no door to the {current} side.")
+                print("Try another direction.  Select q to exit.")
+        elif choice == "n":
+            if hasattr(room[current], "n_to"):
+                current = room[current].n_to.nick_name
+                player.setLocation(current)
+            else:
+                print("There is no door to the {current} side.")
+                print("Try another direction.  Select q to exit.")
+        elif choice == "e":
+            if hasattr(room[current], "e_to"):
+                current = room[current].e_to.nick_name
+                player.setLocation(current)
+            else:
+                print("There is no door to the {current} side.")
+                print("Try another direction.  Select q to exit.")
+        elif choice == "w":
+            if hasattr(room[current], "w_to"):
+                current = room[current].w_to.nick_name
+                player.setLocation(current)
+            else:
+                print("There is no door to the {current} side.")
+                print("Try another direction.  Select q to exit.")
+    else:
+        if command[0] == 'get' or command[0] == 'take':
+            # print(command)
+            get_item = room[player.current_room].find_item(command[1])
+            if get_item != False:
+                player.add_tool(get_item)
+                # print(player.tools[0].name)
+            else:
+                print("{command[1]} doesn't exist in this room.")
 
     print("------------------------------------")
-    print("* You are in " + room[current].name + ": " +
-          room[current].description + "\n")
-    choice = input("Which direction would you go now? (n, e, s, w) => ")
+    print("* You are now in " + room[player.current_room].name + ": " +
+          room[player.current_room].description + "\n")
+    choice = input("Take something or go to a different room: ")
     print("")
     print("")
