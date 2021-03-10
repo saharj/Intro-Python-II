@@ -119,10 +119,16 @@ while choice != "q":
                 player.add_tool(item)
                 item.on_take(item.name)
                 room[player.current_room].remove_item(item)
-                # print(player.tools[0].name)
-                # print(room.items[0].name)
             else:
-                print("{command[1]} doesn't exist in this room.")
+                print(f"!!{command[1]} doesn't exist in this room!!")
+        if command[0] == 'drop':
+            item = player.has_item(command[1])
+            if item is not None:
+                player.remove_tool(item)
+                item.on_drop(item.name)
+                room[player.current_room].add_item(item)
+            else:
+                print(f"!!You don't have a {command[1]} to drop!!")
 
     print("------------------------------------")
     print("* You are now in " + room[player.current_room].name + ": " +

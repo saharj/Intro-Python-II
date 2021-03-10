@@ -5,3 +5,6 @@ class Item:
 
     def on_take(self, name):
         print(f"You have picked up {name}")
+
+    def on_drop(self, name):
+        print(f"You have dropped {name}")

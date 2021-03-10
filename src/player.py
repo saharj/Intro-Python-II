@@ -11,3 +11,12 @@ class Player:
 
     def add_tool(self, item):
         self.tools.append(item)
+
+    def has_item(self, item):
+        for i in self.tools:
+            if i.name == item:
+                return i
+            return False
+
+    def remove_tool(self, item):
+        self.tools.remove(item)
